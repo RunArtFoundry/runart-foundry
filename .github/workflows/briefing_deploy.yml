@@ -22,8 +22,6 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     env:
-      CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
-      CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
       PROJECT_NAME: runart-briefing
 
     steps:
@@ -99,8 +97,8 @@ jobs:
       - name: Deploy to Cloudflare Pages (Preview on PR / Prod on main)
         uses: cloudflare/pages-action@v1
         with:
-          apiToken: ${{ env.CF_API_TOKEN }}
-          accountId: ${{ env.CF_ACCOUNT_ID }}
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
           projectName: ${{ env.PROJECT_NAME }}
           directory: ${{ steps.outdir.outputs.dir }}
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
