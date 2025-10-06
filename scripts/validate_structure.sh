@@ -212,6 +212,7 @@ ALLOWED_IN_ROOT=(
     "LICENSE.md"
     "CONTRIBUTING.md"
     "CHANGELOG.md"
+    "STATUS.md"
     "NEXT_PHASE.md"
 )
 
@@ -243,6 +244,11 @@ for file in "${FILES[@]}"; do
         continue
     fi
     
+    # Permitir contenido Markdown del micrositio canonical
+    if [[ "$file" =~ ^apps/briefing/docs/ ]]; then
+        continue
+    fi
+
     # Si es .md con patrón de reporte (contiene palabras clave)
     if [[ "$file" =~ \.md$ ]] && [[ "$file" =~ (informe|reporte|_audit|_report|_closure|_diagnostic|_overview|_status|_plan) ]]; then
         # Debe estar en ubicaciones permitidas
