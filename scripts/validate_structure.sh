@@ -212,6 +212,7 @@ ALLOWED_IN_ROOT=(
     "LICENSE.md"
     "CONTRIBUTING.md"
     "CHANGELOG.md"
+    "INCIDENTS.md"
     "STATUS.md"
     "NEXT_PHASE.md"
 )
