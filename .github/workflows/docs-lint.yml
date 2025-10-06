@@ -36,7 +36,7 @@ jobs:
 
       - name: Run documentation lint
         id: lint
-        run: make lint-docs
+        run: python tools/lint_docs.py
         continue-on-error: true
 
       - name: Upload docs lint log
