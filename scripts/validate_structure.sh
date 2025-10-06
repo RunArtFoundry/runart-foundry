@@ -112,6 +112,18 @@ else
     done < <(git ls-files)
 fi
 
+if [[ "${SKIP_COMPAT:-}" == "1" ]]; then
+    info "SKIP_COMPAT=1 → ignorando briefing/** (compat) hasta 075_cleanup_briefing.md"
+    FILTERED_FILES=()
+    for file in "${FILES[@]}"; do
+        if [[ "$file" == briefing/* ]]; then
+            continue
+        fi
+        FILTERED_FILES+=("$file")
+    done
+    FILES=("${FILTERED_FILES[@]}")
+fi
+
 if [[ ${#FILES[@]} -eq 0 ]]; then
     success "No files to validate"
     exit 0

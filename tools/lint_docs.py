@@ -15,10 +15,8 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-MKDOCS_CONFIGS = [
-    ("apps/briefing", ROOT / "apps" / "briefing" / "mkdocs.yml"),
-    ("briefing (compat)", ROOT / "briefing" / "mkdocs.yml"),
-]
+CANONICAL_SITE = ("apps/briefing", ROOT / "apps" / "briefing" / "mkdocs.yml")
+LEGACY_COMPAT_CONFIG = ROOT / "briefing" / "mkdocs.yml"
 LOG_FILE = ROOT / "audits" / "docs_lint.log"
 
 SNIPPET_RE = re.compile(r"--8<--\s*[\"']([^\"']+)[\"']")
@@ -43,6 +41,9 @@ class Report:
     def info(self, message: str) -> None:
         self.messages.append(f"INFO: {message}")
 
+    def warning(self, message: str) -> None:
+        self.messages.append(f"WARNING: {message}")
+
     def error(self, message: str) -> None:
         line = f"ERROR: {message}"
         self.messages.append(line)
@@ -58,19 +59,25 @@ class Report:
 
 
 def run_mkdocs(report: Report) -> None:
-    for label, config in MKDOCS_CONFIGS:
-        if not config.exists():
-            report.error(f"mkdocs.yml no encontrado ({label}) → {config}")
-            continue
-        cmd = [sys.executable, "-m", "mkdocs", "build", "--strict", "--config-file", str(config)]
-        report.info(f"Ejecutando mkdocs build --strict ({label})")
-        proc = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True)
-        if proc.stdout.strip():
-            report.info(f"mkdocs stdout ({label}):\n{proc.stdout.strip()}")
-        if proc.stderr.strip():
-            report.info(f"mkdocs stderr ({label}):\n{proc.stderr.strip()}")
-        if proc.returncode != 0:
-            report.error(f"mkdocs build --strict falló ({label})")
+    label, config = CANONICAL_SITE
+    if not config.exists():
+        report.error(f"mkdocs.yml no encontrado ({label}) → {config}")
+        return
+
+    if LEGACY_COMPAT_CONFIG.exists():
+        report.warning(
+            "Se detectó briefing/mkdocs.yml (compat); se omite la build dual hasta 075_cleanup_briefing.md"
+        )
+
+    cmd = [sys.executable, "-m", "mkdocs", "build", "--strict", "--config-file", str(config)]
+    report.info(f"Ejecutando mkdocs build --strict ({label})")
+    proc = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True)
+    if proc.stdout.strip():
+        report.info(f"mkdocs stdout ({label}):\n{proc.stdout.strip()}")
+    if proc.stderr.strip():
+        report.info(f"mkdocs stderr ({label}):\n{proc.stderr.strip()}")
+    if proc.returncode != 0:
+        report.error(f"mkdocs build --strict falló ({label})")
 
 
 def check_snippets(report: Report) -> None:
