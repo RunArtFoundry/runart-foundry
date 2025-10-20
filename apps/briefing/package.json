@@ -10,6 +10,10 @@
     "test:setup": "node --unhandled-rejections=strict --no-warnings tests/scripts/setup-mocks.mjs",
     "test:unit": "node --test --test-timeout=30000 tests/unit/*.mjs",
     "test:unit:smoke": "node --test --test-timeout=30000 tests/unit/smoke-imports.mjs",
+    "test:vitest": "vitest run",
+    "test:vitest:watch": "vitest watch",
+    "lint": "eslint functions/**/*.js",
+    "lint:fix": "eslint functions/**/*.js --fix",
     "test:e2e": "node tests/scripts/run-smokes.mjs",
     "smokes:prod": "node ./tests/scripts/run-smokes-prod.mjs",
     "smokes:prod:auth": "RUN_AUTH_SMOKES=1 node ./tests/scripts/run-smokes-prod.mjs",
@@ -24,6 +28,7 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20251004.0",
+    "eslint": "^8.57.0",
     "miniflare": "^4.20251004.0",
     "msw": "^2.3.1",
     "nock": "^14.0.0",
