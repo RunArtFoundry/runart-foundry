@@ -8,6 +8,39 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 
 *No hay cambios pendientes.*
 
+## [Released — 2025-10-20] (ops)
+### Fixed (2025-10-20)
+- **Pages Functions — Hardening en producción:** Promoción completada tras el merge de `docs/pages-functions-prod-close`; el workflow `Deploy Production` (`run 18657958933`) publicó los cambios y mantuvo la protección de Access para visitantes.
+
+### Added (2025-10-20)
+- **Smokes de producción (no-auth):** Nueva suite de smoke tests Node.js (`apps/briefing/tests/scripts/run-smokes-prod.mjs`) para validar producción sin autenticación:
+  - Scripts npm: `smokes:prod` y `smokes:prod:auth` (preparado para Access Service Token).
+  - Makefile targets: `smokes-prod` y `smokes-prod-auth`.
+  - Integración CI: workflow `pages-prod.yml` ejecuta smokes post-deploy y sube artefactos.
+  - Helper compartido: `apps/briefing/tests/scripts/lib/http.js` con fetch timeout y utilidades de logging.
+
+### Validated (2025-10-20)
+- **Deploy Production:** Run `18657958933` en GitHub Actions (workflow `deploy-production.yml`) finalizó en ✅ SUCCESS y registró URL oficial `https://runart-foundry.pages.dev`.
+- **Smokes manuales producción (bash):** `make test-smoke-prod` (timestamp `20251020T160949Z`) verificó 5/5 endpoints con redirección 302 a `runart-briefing-pages.cloudflareaccess.com`; evidencias almacenadas en `apps/briefing/_reports/smokes_prod_20251020T160949Z/`.
+- **Smokes Node.js producción (no-auth):** Ejecutados localmente (timestamp `20251020T163744Z`) contra `https://runart-foundry.pages.dev` con resultados:
+  - A: GET `/` → 302 (Access) ✅
+  - B: GET `/api/whoami` → 302 (Access) ✅
+  - C: HEAD `/robots.txt` → 302 (Access) ✅
+  - Resumen: PASS=3 FAIL=0 TOTAL=3
+  - Artefactos: `apps/briefing/_reports/tests/smokes_prod_20251020T163744/log.txt`
+
+### Docs (2025-10-20)
+- Bitácora 082 actualizada con:
+  - Sección "Smokes de producción (no-auth)" con resultados, artefactos y criterios de éxito.
+  - Sección "Smokes de producción (auth)" marcada como pendiente con requisitos y scripts disponibles.
+- `_reports/PROBLEMA_pages_functions_preview.md` actualizado con:
+  - Estado "COMPLETADO EN PRODUCCIÓN".
+  - Bloque "Promoción a Prod — Evidencias Smokes" con tabla de resultados, artefactos y referencias al workflow CI.
+- Nuevo seguimiento `reports/2025-10-20_access_service_token_followup.md` para la integración del Access Service Token.
+
+### Pending
+- Completar la integración del Access Service Token para habilitar smokes autenticados y revertir códigos temporales en `/api/inbox` y `/api/decisiones` (ver `reports/2025-10-20_access_service_token_followup.md`).
+
 ## [Released — 2025-10-15] (ops)
 ### Fixed (2025-10-15)
 - **Pages Functions — Global Scope:** Resuelto error `Disallowed operation called within global scope` que impedía deployment de Functions en Cloudflare Pages.
