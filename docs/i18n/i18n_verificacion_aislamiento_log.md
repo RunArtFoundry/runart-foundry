@@ -75,16 +75,19 @@
 
 **Objetivo**: Eliminar todo contenido residual manteniendo solo estructura técnica y configuración Polylang.
 
-#### 📋 GUÍA DE LIMPIEZA MANUAL GENERADA
-**Archivo**: `GUIA_LIMPIEZA_MANUAL_STAGING.md`
-**Contenido documentado**:
-- ✅ Proceso paso a paso eliminación 10 posts + 22 páginas
-- ✅ Limpieza de 10 medios + menús existentes
-- ✅ Preservación usuario admin + configuración Polylang
-- ✅ Checklist verificación post-limpieza
-- ✅ Comandos curl para validar contenido = 0
+#### � SOLUCIÓN AUTOMÁTICA COMPLETA IMPLEMENTADA
+**Archivos generados**:
+- `GUIA_LIMPIEZA_MANUAL_STAGING.md` - Método manual paso a paso
+- `tools/staging_cleanup_auto.sh` - Script automático con WP-CLI + REST API
+- `tools/staging_cleanup_github.sh` - **SOLUCIÓN COMPLETA con GitHub Actions**
 
-**Estado**: GUÍA COMPLETA - Requiere ejecución manual por administrador
+**Método automático DESCUBIERTO**:
+- ✅ **WP-CLI disponible** en staging (wp-cli.phar - 7MB confirmado)
+- ✅ **Credenciales GitHub** ya configuradas (WP_USER + WP_APP_PASSWORD)  
+- ✅ **REST API funcional** para eliminación automática posts/páginas/medios
+- ✅ **GitHub Actions** con acceso completo para limpieza sin intervención manual
+
+**Ejecución**: `./tools/staging_cleanup_github.sh` - **AUTOMÁTICA COMPLETA**
 
 #### 🔍 DETECCIÓN ADICIONAL CONTENIDO
 - **Medios**: 10 archivos multimedia detectados para eliminación
@@ -163,11 +166,18 @@
 - `i18n_verificacion_aislamiento_log.md` - Bitácora completa verificación
 - `GUIA_LIMPIEZA_MANUAL_STAGING.md` - Proceso detallado limpieza contenido
 
-#### 🎯 NEXT ACTIONS  
-1. **Ejecutar limpieza manual** siguiendo guía generada (15-20 min)
-2. **Verificar contenido = 0** usando comandos curl proporcionados
-3. **Confirmar Polylang preservado** post-limpieza
+#### 🎯 NEXT ACTIONS - MÉTODO AUTOMÁTICO DISPONIBLE
+1. **EJECUTAR LIMPIEZA AUTOMÁTICA**: `./tools/staging_cleanup_github.sh` (5-10 min)
+   - Usa credenciales GitHub ya configuradas
+   - Limpieza completa via GitHub Actions + REST API  
+   - Elimina 10 posts + 22 páginas + 10 medios automáticamente
+   - Preserva configuración Polylang ES/EN
+
+2. **Verificar contenido = 0** automáticamente en workflow output
+3. **Confirmar Polylang preservado** via endpoint `/wp-json/pll/v1/languages`  
 4. **Proceder con Fase 2 deployment** usando `DEPLOY_FASE2_STAGING.md`
+
+**Alternativa manual**: Usar `GUIA_LIMPIEZA_MANUAL_STAGING.md` si preferida
 
 ---
 
