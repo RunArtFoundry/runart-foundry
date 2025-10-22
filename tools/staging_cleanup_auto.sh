@@ -93,7 +93,7 @@ main_cleanup() {
     
     # Verificar acceso al staging
     log_info "Verificando acceso a staging..."
-    if ! curl -s -I "$STAGING_URL" | grep -q "200 OK"; then
+    if ! curl -s -I "$STAGING_URL" | grep -q "200"; then
         log_error "No se puede acceder a $STAGING_URL"
         exit 1
     fi

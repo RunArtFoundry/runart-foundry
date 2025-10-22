@@ -25,7 +25,7 @@ fi
 
 # Verificar staging accesible
 echo "🔍 Verificando acceso a staging..."
-if curl -s -I "$STAGING_URL" | grep -q "200 OK"; then
+if curl -s -I "$STAGING_URL" | grep -q "200"; then
     echo "✅ Staging accesible"
 else
     echo "❌ Staging no accesible"
