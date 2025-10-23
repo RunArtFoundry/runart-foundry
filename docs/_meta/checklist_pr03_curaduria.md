@@ -1,0 +1,6 @@
+- [x] Archivos activos movidos/copiados a docs/live/
+- [x] Archivos históricos movidos a docs/archive/YYYY-MM/
+- [x] Frontmatter presente en todos los docs
+- [x] Enlaces internos corregidos
+- [x] Índices live/ y archive/ actualizados
+- [x] Validadores soft ejecutados y reporte generado
